@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
-
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 // import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { gql, graphql } from 'react-apollo';
 import styles from './Modules.css';
@@ -9,8 +10,8 @@ import OfferList from './OfferList'
 import Filters from './Filters'
 
 
-@graphql(gql`query ($filter: OfferFilter) {
-  allOffers (filter: $filter){
+@graphql(gql`query ($filter: OfferFilter $orderBy:OfferOrderBy ) {
+  allOffers (filter: $filter orderBy:$orderBy){
     price
     deductible
     id
@@ -26,7 +27,8 @@ import Filters from './Filters'
 }`,{
   options: (ownProps) => ({
     variables: {
-      filter: ownProps.filter // ownProps are the props that are added from the parent component
+      filter: ownProps.filter, // ownProps are the props that are added from the parent component
+      orderBy:ownProps.sortBy
     }
   })
 }
@@ -34,6 +36,7 @@ import Filters from './Filters'
 class Home extends Component {
 
   render() {
+
 
     return (
       <div className="App row">
@@ -49,8 +52,17 @@ class Home extends Component {
             <div className="start-xs col-xs-6">
               <h3>{this.props.data.allOffers && `${this.props.data.allOffers.length} results`}</h3>
             </div>
-            <div className="end-xs col-xs-6">
-              <h3>{this.props.data.allOffers && `${this.props.data.allOffers.length} results`}</h3>
+            <div className=" col-xs-6">
+                <SelectField
+                  floatingLabelText="Sort By"
+                  value={this.props.sortBy}
+                  onChange={this.props.sortChange}
+                  >
+                  <MenuItem value={'deductible_ASC'} primaryText="deductible_ASC" />
+                  <MenuItem value={'deductible_DESC'} primaryText="deductible_DESC" />
+                  <MenuItem value={'price_ASC'} primaryText="price_ASC" />
+                  <MenuItem value={'price_DESC'} primaryText="price_DESC" />
+                </SelectField>
             </div>
         </Paper>
           <div className={`row col-xs-12`}>

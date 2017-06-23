@@ -11,7 +11,7 @@ class Filters extends Component {
     const {companies,offers} = this.props
     const companyFilter = companies &&
     companies.map( (company, index) => (
-      <Checkbox key={index}
+      <Checkbox key={'comp'+index}
         label={company.name}
         onCheck={(e,isInputChecked) => this.props.filterChange(company,isInputChecked)}
       />)
@@ -27,13 +27,18 @@ class Filters extends Component {
       else
         return prev
 
-    }, []).sort((a,b) => a>b)
-    .map(deductible => (<div className={`${styles.deductible}`}>
+    }, [])
+    .sort((a,b) => a>b)
+    .map(deductible => (<div
+      className={`${styles.deductible}`}
+      key={'ded'+deductible}
+      >
       <Checkbox
         style={{width:10}}
         labelPosition="left"
-        key={deductible}
-        label={deductible} />
+        label={deductible}
+        onCheck={(e,isInputChecked) => this.props.filterChange({value:deductible, __typename:'Deductible'},isInputChecked)}
+      />
     </div>))
 
     console.log({deductibles})
