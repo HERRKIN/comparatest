@@ -26,14 +26,11 @@ const OfferList = ({allOffers, loading}) => {
  const renderOffers = () => (!allOffers || allOffers.length === 0 ) ?
    (<h1 key='noresult'> No Results </h1>) :
    allOffers.map(item => (
-     <Offer offer={item}/>
+     <Offer key={item.id} offer={item}/>
    ))
 
   return loading ? (<h1>loading</h1>) :
-  (<div className='row col-xs-12'>
-    <h2 className='row col-xs-12'>
-      Offers:
-    </h2>
+  (<div style={{paddingTop:20}} className='row col-xs-12'>
     {renderOffers()}
   </div>)
 

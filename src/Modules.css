@@ -1,37 +1,11 @@
-.appIntro {
-    font-size: large;
-}
-
-.code {
-    color: red;
-    font-weight: bold;
-    justify-content: center;
-}
-
-.description {
-    padding: 20px;
-}
-
-.warning {
-    margin: 10px 0;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 100;
-    color: #e68484;
-}
-
-.command {
-    margin: 40px 0px 50px 0;
-}
-
-.readmeLink {
-    font-size: 18px;
-}
-
-.experimental {
-    font-size: 12px;
-    font-weight: 100;
+.width100{
+width: 100%;
+overflow: auto;
 }
 .filters{
 padding-top: 20px;
+}
+.deductible{
+  display: inline-block;
+  margin: 0 5px;
 }
