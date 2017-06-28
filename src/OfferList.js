@@ -8,7 +8,7 @@ const Offer = ({offer}) => (
     <Paper className="row col-xs-12" key={offer.id} >
       <div  className="row col-xs-12">
       <div style={{padding:5}}  className=" col-xs-4 center-xs">
-        <img className="col-xs-12" src={offer.company.imageUrl} />
+        <img className="col-xs-12" alt="a" src={offer.company.imageUrl} />
         <h4>{offer.company.name}</h4>
       </div>
       <div className="col-xs-8">

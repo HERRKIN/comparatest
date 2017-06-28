@@ -8,12 +8,15 @@ import App from './App';
 import './index.css';
 // import './flexbox.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 injectTapEventPlugin();
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
+  <ApolloProvider  client={client}>
     <MuiThemeProvider>
-      <App />
+      <Router>
+        <Route path='/' component={App} />
+      </Router>
     </MuiThemeProvider>
   </ApolloProvider>,
   document.getElementById('root')

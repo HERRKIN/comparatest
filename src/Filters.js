@@ -3,37 +3,46 @@ import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 import Slider from 'material-ui/Slider';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import styles from './Modules.css'
 
 class Filters extends Component {
 
   render() {
-    const {companies,offers} = this.props
-    const companyFilter = companies &&
-    companies.map( (company, index) => (
-      <Checkbox key={'comp'+index}
+    const {companies, deductibles, filters} = this.props
+
+    let filteredCompanies, filteredDeductibles
+    filteredCompanies = filters && filters.OR.filter(elem => elem['company'] !==undefined)
+    .reduce((prev, cur) => {
+      return [...prev,{...cur['company']}]
+    },[])
+    filteredDeductibles = filters && filters.OR.filter(elem => elem['deductible']!==undefined)
+    .reduce((prev, cur) => {
+      return [...prev,cur['deductible']]
+    },[])
+    
+    const companyFilter = companies && companies.map( (company, index) =>{
+      const checked = typeof filteredCompanies.find(elem => elem.name === company.name) !== 'undefined'
+      return (
+      <Checkbox
+        key={'comp'+index}
+        checked={checked}
         label={company.name}
         onCheck={(e,isInputChecked) => this.props.filterChange(company,isInputChecked)}
       />)
-    )
+    })
 
-    const maxPrice = offers && offers.reduce((prev,cur) => {
-      return (cur.price > prev) && cur.price
-    }, 0)
+    // const maxPrice = offers && offers.reduce((prev,cur) => {
+    //   return (cur.price > prev) && cur.price
+    // }, 0)
 
-    const deductibles = offers && offers.reduce((prev, cur) => {
-      if(!prev.includes(cur.deductible))
-        return [...prev, cur.deductible]
-      else
-        return prev
-
-    }, [])
-    .sort((a,b) => a>b)
-    .map(deductible => (<div
+    const deductiblesFilter = deductibles.map(deductible => (<div
       className={`${styles.deductible}`}
       key={'ded'+deductible}
       >
       <Checkbox
+        checked={filteredDeductibles.includes(deductible)}
         style={{width:10}}
         labelPosition="left"
         label={deductible}
@@ -41,7 +50,6 @@ class Filters extends Component {
       />
     </div>))
 
-    console.log({deductibles})
     return (
           <Paper style={{padding:5}} className='row'>
             <div className='row col-xs-12'>
@@ -65,8 +73,11 @@ class Filters extends Component {
             <div style={{marginTop:20}} >
               <span><b>Deductibles</b></span>
               <div className="col-xs-12">
-                {deductibles}
+                {deductiblesFilter}
               </div>
+            </div>
+            <div className='row col-xs-12 center-xs'>
+              <RaisedButton label="Reset filters" primary={true} onTouchTap={this.props.resetFilter}/>
             </div>
           </Paper>
     )
