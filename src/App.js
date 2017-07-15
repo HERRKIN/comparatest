@@ -12,11 +12,8 @@ class App extends React.Component {
     }
   }
   componentWillReceiveProps (nextProps) {
-    console.log('state from route', nextProps.location.state)
     this.setState({...nextProps.location.state})
   }
-
-
 
   render () {
     const {props} = this
